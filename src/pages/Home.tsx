@@ -1,8 +1,16 @@
 import React from 'react';
+import fans from '../assets/fans.webp';
 
 const Home: React.FC = () => {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-barcelonaBlue">
+        <div
+            className="flex items-center justify-center min-h-screen"
+            style={{
+                backgroundImage: `url(${fans})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
+        >
             <div className="text-center bg-white p-8 rounded-lg shadow-md">
                 <h1 className="text-4xl font-bold text-barcelonaBlue mb-4">Welcome to FC Barcelona Fan Club</h1>
                 <p className="text-lg text-gray-700">Your ultimate destination for all things Barça!</p>

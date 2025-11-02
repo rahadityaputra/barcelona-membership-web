@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import contract from '../assets/contract.webp';
 // import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import AccountForm from '../components/register/AccountForm';
@@ -121,8 +122,16 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-barcelonaBlue">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div
+            className="relative flex items-center justify-center min-h-screen"
+            style={{
+                backgroundImage: `url(${contract})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
+        >
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.35)' }} />
+            <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h1 className="text-2xl font-bold text-center text-barcelonaBlue mb-6">Register for Membership</h1>
 
                 {error && (
