@@ -1,27 +1,81 @@
 import React from 'react';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
+import NewsCard from '../news/NewsCard';
+import hasil from '../assets/hasil.webp';
+import logo from '../assets/logo.webp';
+import atas from '../assets/atas.webp';
+
+
+const sampleNews = [
+    { title: 'Matchday Highlights', description: 'Relive the best moments from last night.', image: hasil },
+    { title: 'Exclusive Interview', description: 'An interview with the captain.', image: logo },
+    { title: 'Members Meet-up', description: 'Join the next fan meetup in your city.', image: hasil },
+];
 
 const Dashboard: React.FC = () => {
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
+        <div className="min-h-screen bg-gray-50 flex flex-col">
             <Header />
-            <main className="container mx-auto px-4 py-8 flex-grow">
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-semibold text-barcelonaBlue mb-4">Welcome to your Dashboard</h2>
-                    <p className="text-gray-700">Here is a summary of your account and activities.</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div className="bg-barcelonaBlue text-white p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold">Membership Status</h3>
-                            <p>Premium Member</p>
+
+            {/* Hero */}
+            <section className="relative">
+                <div className="h-64 md:h-96 bg-cover bg-center" style={{ backgroundImage: `url(${atas})` }} />
+                <div className="-mt-40 md:-mt-56 relative container mx-auto px-4">
+                    <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center">
+                        <img src={logo} alt="logo" className="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white shadow-md object-cover" />
+                        <div className="ml-6 flex-1">
+                            <h1 className="text-2xl md:text-4xl font-bold text-[#03204a]">Welcome back, Blaugrana!</h1>
+                            <p className="mt-2 text-gray-700">This is your fan hub — latest news, membership perks, and upcoming events all in one place.</p>
+                            <div className="mt-4 flex space-x-3">
+                                <a href="/exclusive-news" className="px-4 py-2 bg-barcelonaRed text-white rounded-md shadow">Exclusive News</a>
+                                <a href="/membership-card" className="px-4 py-2 bg-barcelonaBlue text-white rounded-md shadow">View Membership Card</a>
+                            </div>
                         </div>
-                        <div className="bg-barcelonaRed text-white p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold">News Read</h3>
-                            <p>15 Articles</p>
+                        <div className="mt-4 md:mt-0 md:ml-6 text-center">
+                            <p className="text-sm text-gray-500">Your tier</p>
+                            <p className="text-xl font-bold text-green-600">Premium</p>
+                            <p className="text-xs text-gray-500 mt-2">Since 2023</p>
                         </div>
                     </div>
                 </div>
+            </section>
+
+            <main className="container mx-auto px-4 py-8 flex-grow">
+                {/* Quick stats */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-white rounded-lg shadow p-4 flex items-center">
+                        <div className="bg-barcelonaBlue text-white rounded-full h-12 w-12 flex items-center justify-center">M</div>
+                        <div className="ml-4">
+                            <p className="text-sm text-gray-500">Members</p>
+                            <p className="text-xl font-bold">12,345</p>
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-lg shadow p-4 flex items-center">
+                        <div className="bg-barcelonaRed text-white rounded-full h-12 w-12 flex items-center justify-center">N</div>
+                        <div className="ml-4">
+                            <p className="text-sm text-gray-500">News Read</p>
+                            <p className="text-xl font-bold">1,234</p>
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-lg shadow p-4 flex items-center">
+                        <div className="bg-yellow-400 text-white rounded-full h-12 w-12 flex items-center justify-center">E</div>
+                        <div className="ml-4">
+                            <p className="text-sm text-gray-500">Upcoming Events</p>
+                            <p className="text-xl font-bold">3</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Latest news */}
+                <h3 className="text-xl font-semibold text-[#03204a] mb-4">Latest for fans</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {sampleNews.map((n, i) => (
+                        <NewsCard key={i} title={n.title} description={n.description} image={n.image} />
+                    ))}
+                </div>
             </main>
+
             <Footer />
         </div>
     );
