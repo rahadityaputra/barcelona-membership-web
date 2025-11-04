@@ -7,6 +7,7 @@ import Profile from '../pages/Profile';
 import MembershipCard from '../membership/MembershipCard';
 import NewsExclusive from '../news/NewsExclusive';
 import NewsRegular from '../news/NewsRegular';
+import Squad from '../pages/Squad';
 import Home from '../pages/Home';
 import ProtectedRoute from '../ProtectedRoute';
 
@@ -23,6 +24,7 @@ const AppRoutes: React.FC = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/membership-card" element={<MembershipCard />} />
                     <Route path="/exclusive-news" element={<NewsExclusive />} />
+                    <Route path="/squad" element={<Squad />} />
                     <Route path="/regular-news" element={<NewsRegular />} />
                 </Route>
             </Routes>

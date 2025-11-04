@@ -2,15 +2,16 @@ import React from 'react';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import NewsCard from '../news/NewsCard';
-import hasil from '../assets/hasil.webp';
-import logo from '../assets/logo.webp';
+import { Link } from 'react-router-dom';
+import squad from '../assets/squad.webp';
 import atas from '../assets/atas.webp';
-
-
+import yamal from '../assets/yamal.webp';
+import profile from '../assets/profile.webp';
+import meet from '../assets/meet.webp';
 const sampleNews = [
-    { title: 'Matchday Highlights', description: 'Relive the best moments from last night.', image: hasil },
-    { title: 'Exclusive Interview', description: 'An interview with the captain.', image: logo },
-    { title: 'Members Meet-up', description: 'Join the next fan meetup in your city.', image: hasil },
+    { title: 'Squad', description: 'Relive the best moments from last night.', image: squad },
+    { title: 'Exclusive Interview', description: 'An interview with the captain.', image: yamal },
+    { title: 'Members Meet-up', description: 'Join the next fan meetup in your city.', image: meet },
 ];
 
 const Dashboard: React.FC = () => {
@@ -18,27 +19,29 @@ const Dashboard: React.FC = () => {
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <Header />
 
-            {/* Hero */}
+            {/* Hero: use an <img> that fills the page width and position an absolute overlay so the image isn't shifted or cropped */}
             <section className="relative">
-                <div className="h-64 md:h-96 bg-cover bg-center" style={{ backgroundImage: `url(${atas})` }} />
-                <div className="-mt-40 md:-mt-56 relative container mx-auto px-4">
-                    <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center">
-                        <img src={logo} alt="logo" className="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white shadow-md object-cover" />
-                        <div className="ml-6 flex-1">
-                            <h1 className="text-2xl md:text-4xl font-bold text-[#03204a]">Welcome back, Blaugrana!</h1>
-                            <p className="mt-2 text-gray-700">This is your fan hub — latest news, membership perks, and upcoming events all in one place.</p>
-                            <div className="mt-4 flex space-x-3">
-                                <a href="/exclusive-news" className="px-4 py-2 bg-barcelonaRed text-white rounded-md shadow">Exclusive News</a>
-                                <a href="/membership-card" className="px-4 py-2 bg-barcelonaBlue text-white rounded-md shadow">View Membership Card</a>
+                <div className="w-full">
+                    <img src={atas} alt="hero" className="w-full h-auto block" />
+                </div>
+                {/* absolute overlay centered at bottom of image to avoid moving the image itself */}
+                <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none" style={{ transform: 'translateY(calc(50% + 20px))' }}>
+                    <div className="container mx-auto px-4">
+                        <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center pointer-events-auto">
+                            <img src={profile} alt="logo" className="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white shadow-md object-cover" />
+                            <div className="ml-6 flex-1">
+                                <h1 className="text-2xl md:text-4xl font-bold text-[#03204a]">Welcome back, Blaugrana!</h1>
+                                <p className="mt-2 text-gray-700">This is your fan hub, latest news, membership perks, and upcoming events all in one place.</p>
+                                <div className="mt-4 flex space-x-3">
+                                    <a href="/exclusive-news" className="px-4 py-2 bg-barcelonaRed text-white rounded-md shadow">Exclusive News</a>
+                                    <a href="/membership-card" className="px-4 py-2 bg-barcelonaBlue text-white rounded-md shadow">View Membership Card</a>
+                                </div>
                             </div>
-                        </div>
-                        <div className="mt-4 md:mt-0 md:ml-6 text-center">
-                            <p className="text-sm text-gray-500">Your tier</p>
-                            <p className="text-xl font-bold text-green-600">Premium</p>
-                            <p className="text-xs text-gray-500 mt-2">Since 2023</p>
                         </div>
                     </div>
                 </div>
+                {/* add extra bottom padding so following content doesn't overlap the overlay */}
+                <div className="pb-24 md:pb-32" />
             </section>
 
             <main className="container mx-auto px-4 py-8 flex-grow">
@@ -71,7 +74,13 @@ const Dashboard: React.FC = () => {
                 <h3 className="text-xl font-semibold text-[#03204a] mb-4">Latest for fans</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {sampleNews.map((n, i) => (
-                        <NewsCard key={i} title={n.title} description={n.description} image={n.image} />
+                        i === 0 ? (
+                            <Link to="/squad" key={i} className="block">
+                                <NewsCard title={n.title} description={n.description} image={n.image} />
+                            </Link>
+                        ) : (
+                            <NewsCard key={i} title={n.title} description={n.description} image={n.image} />
+                        )
                     ))}
                 </div>
             </main>

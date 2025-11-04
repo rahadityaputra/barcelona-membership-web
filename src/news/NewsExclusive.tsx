@@ -2,12 +2,15 @@ import React from 'react';
 import NewsList from './NewsList';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
+import hasil from '../assets/hasil.webp';
+import yamal from '../assets/yamal.webp';
+import meet from '../assets/meet.webp';
 
 const NewsExclusive: React.FC = () => {
     const exclusiveNews = [
-        { id: 1, title: 'Exclusive News 1', description: 'This is the first exclusive news for premium members.', image: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Exclusive+1' },
-        { id: 2, title: 'Exclusive News 2', description: 'This is the second exclusive news for premium members.', image: 'https://via.placeholder.com/300/0000FF/FFFFFF?text=Exclusive+2' },
-        { id: 3, title: 'Exclusive News 3', description: 'This is the third exclusive news for premium members.', image: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Exclusive+3' },
+        { id: 1, title: 'Matchday Highlights', description: 'Relive the best moments from last night.', image: hasil },
+        { id: 2, title: 'Exclusive Interview', description: 'An interview with the captain.', image: yamal },
+        { id: 3, title: 'Members Meet-up', description: 'Join the next fan meetup in your city.', image: meet },
     ];
 
     return (
