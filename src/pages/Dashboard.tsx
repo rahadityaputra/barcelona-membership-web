@@ -9,8 +9,8 @@ import yamal from '../assets/yamal.webp';
 import profile from '../assets/profile.webp';
 import meet from '../assets/meet.webp';
 const sampleNews = [
-    { title: 'Squad', description: 'Relive the best moments from last night.', image: squad },
-    { title: 'Exclusive Interview', description: 'An interview with the captain.', image: yamal },
+    { title: 'Squad', description: 'Meet the squad of our army', image: squad },
+    { title: 'Exclusive Interview', description: 'An interview with the starboy.', image: yamal },
     { title: 'Members Meet-up', description: 'Join the next fan meetup in your city.', image: meet },
 ];
 
@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
                     <img src={atas} alt="hero" className="w-full h-auto block" />
                 </div>
                 {/* absolute overlay centered at bottom of image to avoid moving the image itself */}
-                <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none" style={{ transform: 'translateY(calc(50% + 20px))' }}>
+                <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none" style={{ transform: 'translateY(calc(50% + 8px))' }}>
                     <div className="container mx-auto px-4">
                         <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center pointer-events-auto">
                             <img src={profile} alt="logo" className="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white shadow-md object-cover" />
@@ -73,15 +73,30 @@ const Dashboard: React.FC = () => {
                 {/* Latest news */}
                 <h3 className="text-xl font-semibold text-[#03204a] mb-4">Latest for fans</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {sampleNews.map((n, i) => (
-                        i === 0 ? (
-                            <Link to="/squad" key={i} className="block">
-                                <NewsCard title={n.title} description={n.description} image={n.image} />
-                            </Link>
-                        ) : (
-                            <NewsCard key={i} title={n.title} description={n.description} image={n.image} />
-                        )
-                    ))}
+                    {sampleNews.map((n, i) => {
+                        if (i === 0) {
+                            return (
+                                <Link to="/squad" key={i} className="block">
+                                    <NewsCard title={n.title} description={n.description} image={n.image} />
+                                </Link>
+                            );
+                        }
+                        if (i === 1) {
+                            return (
+                                <Link to="/exclusive-interview" key={i} className="block">
+                                    <NewsCard title={n.title} description={n.description} image={n.image} />
+                                </Link>
+                            );
+                        }
+                        if (i === 2) {
+                            return (
+                                <Link to="/members-meetup" key={i} className="block">
+                                    <NewsCard title={n.title} description={n.description} image={n.image} />
+                                </Link>
+                            );
+                        }
+                        return <NewsCard key={i} title={n.title} description={n.description} image={n.image} />;
+                    })}
                 </div>
             </main>
 

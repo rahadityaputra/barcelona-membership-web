@@ -4,9 +4,6 @@ import Footer from '../layout/Footer';
 import squadImg from '../assets/squad.webp';
 
 const squad = [
-    { id: 1, name: 'Marc-André ter Stegen', position: 'Player' },
-    { id: 3, name: 'Balde', position: 'Player' },
-    { id: 4, name: 'R. Araujo', position: 'Player' },
         { id: 13, name: 'Joan García', position: 'Goalkeeper' },
         { id: 1, name: 'Marc-André ter Stegen', position: 'Goalkeeper' },
         { id: 25, name: 'Wojciech Szczęsny', position: 'Goalkeeper' },
@@ -37,23 +34,21 @@ const Squad: React.FC = () => {
         <div className="min-h-screen bg-gray-100 flex flex-col">
             <Header />
 
-            {/* Hero: full-width squad photo with an overlaid title card (like Dashboard) */}
+            
             <section className="relative">
                 <div className="w-full">
                     <img src={squadImg} alt="squad" className="w-full h-auto block" />
                 </div>
-                <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none" style={{ transform: 'translateY(calc(50% + 20px))' }}>
-                    <div className="container mx-auto px-4">
-                        <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 pointer-events-auto">
-                            <h1 className="text-2xl md:text-4xl font-bold text-[#03204a]">Barcelona Squad</h1>
-                            <p className="mt-2 text-gray-700">Meet the current first-team squad.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="pb-24 md:pb-32" />
             </section>
 
             <main className="container mx-auto p-4 flex-grow mt-8">
+                <div className="max-w-4xl mx-auto mb-8">
+                    <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10">
+                        <h1 className="text-2xl md:text-4xl font-bold text-[#03204a]">Barcelona Squad</h1>
+                        <p className="mt-2 text-gray-700">Meet the current first-team squad.</p>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {squad.map(player => (
                             <div key={player.id} className="bg-white rounded-lg shadow p-4 flex items-center space-x-4">

@@ -7,6 +7,8 @@ import Profile from '../pages/Profile';
 import MembershipCard from '../membership/MembershipCard';
 import NewsExclusive from '../news/NewsExclusive';
 import NewsRegular from '../news/NewsRegular';
+import ExclusiveInterview from '../news/ExclusiveInterview';
+import MembersMeetup from '../news/MembersMeetup';
 import Squad from '../pages/Squad';
 import Home from '../pages/Home';
 import ProtectedRoute from '../ProtectedRoute';
@@ -24,6 +26,8 @@ const AppRoutes: React.FC = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/membership-card" element={<MembershipCard />} />
                     <Route path="/exclusive-news" element={<NewsExclusive />} />
+                    <Route path="/exclusive-interview" element={<ExclusiveInterview />} />
+                    <Route path="/members-meetup" element={<MembersMeetup />} />
                     <Route path="/squad" element={<Squad />} />
                     <Route path="/regular-news" element={<NewsRegular />} />
                 </Route>
