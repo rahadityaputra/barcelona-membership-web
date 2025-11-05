@@ -1,21 +1,21 @@
 import React from "react";
 import api from "../../services/api";
 
-interface MembershipCardModalProps {
+interface IdentitCardModalType {
   isOpen: boolean;
   onClose: () => void;
   profile: {
     fullname?: string;
-    membershipCardURL?: string;
+    identityCardUrl?: string;
     email?: string;
   };
 }
 
-const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClose, profile }) => {
+const IdentityCardModal: React.FC<IdentitCardModalType> = ({ isOpen, onClose, profile }) => {
   if (!isOpen) return null;
 
   const downloadCard = async () => {
-    const res = await api.get("http://localhost:3000/api/user/membership-card/download", {
+    const res = await api.get("http://localhost:3000/api/user/identity-card/download", {
       responseType: 'blob',
 
     });
@@ -25,7 +25,7 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "membership-card.png";
+    a.download = "identity-card.png";
     a.click();
   };
 
@@ -47,7 +47,7 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
           <h2 className="text-xl font-bold text-barcelonaBlue mb-4">Membership Card</h2>
 
           <img
-            src={profile.membershipCardURL}
+            src={profile.identityCardUrl}
             className="border-barcelonaGold"
             alt="Profile"
           />
@@ -68,4 +68,4 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
   );
 };
 
-export default MembershipCardModal;
+export default IdentityCardModal;

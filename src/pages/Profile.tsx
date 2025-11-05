@@ -7,7 +7,7 @@ import avatarPlaceholder from '../assets/profile.webp';
 import MembershipCardModal from '../components/profile/MembershipCardModal';
 
 const Profile: React.FC = () => {
-    const { profile, fetchProfile, updateProfile } = useProfile();
+    const { profile, fetchProfile, updateProfile, downloadIdentityCard } = useProfile();
     const [editing, setEditing] = useState(false);
     const [showMembershipModal, setShowMembershipModal] = useState(false);
     const [form, setForm] = useState({
@@ -33,7 +33,7 @@ const Profile: React.FC = () => {
                 email: profile.email || '',
                 address: profile.address || '',
                 gender: profile.gender || '',
-                dateOfBirth: profile.dateOfBirth || '',
+                dateOfBirth: profile.birthDate || '',
             });
         }
     }, [profile]);
@@ -64,6 +64,11 @@ const Profile: React.FC = () => {
         }
     };
 
+    const handleIdentityCardClick = () => {
+        downloadIdentityCard();
+        
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col">
             <Header />
@@ -71,7 +76,7 @@ const Profile: React.FC = () => {
                 <div className="w-full max-w-4xl">
                     <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
                         <div className="md:w-1/3 bg-gradient-to-b from-white to-gray-100 p-6 flex flex-col items-center">
-                            <img src={profile?.profileImageUrl || avatarPlaceholder} alt="Avatar" className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-barcelonaGold object-cover" />
+                            <img src={profile?.avatar || avatarPlaceholder} alt="Avatar" className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-barcelonaGold object-cover" />
                             <h3 className="mt-4 text-lg font-bold text-gray-800">{form.fullname}</h3>
                             <p className="text-sm text-gray-500">Member ID: <span className="font-mono">{profile?.membershipId || 'N/A'}</span></p>
                             <p className="mt-2 text-sm text-green-600 font-semibold">{isMember ? 'Member' : 'Non-Member'}</p>
@@ -92,12 +97,29 @@ const Profile: React.FC = () => {
                                 </button>
                             </div>
 
+                          {profile?.isMemberUser && (<div className="mt-3 w-full">
+                                <button
+                                    onClick={handleIdentityCardClick}
+                                    className="w-full py-2 px-4 border border-barcelonaBlue text-barcelonaBlue rounded-md shadow-sm hover:bg-barcelonaBlue/5"
+                                >
+                                    Download Identity Card
+                                </button>
+                            </div>)}
+
                             {/* Membership Card Modal */}
                             <MembershipCardModal
                                 isOpen={showMembershipModal}
                                 onClose={() => setShowMembershipModal(false)}
                                 profile={profile || {}}
                             />
+
+
+                             {/* Membership Card Modal
+                             <IdentityCardModal
+                                isOpen={showIdentityCardModal}
+                                onClose={() => setShowIdentityCardModal(false)}
+                                profile={profile || {}}
+                            /> */}
                         </div>
 
                         <div className="md:w-2/3 p-6">
@@ -161,7 +183,7 @@ const Profile: React.FC = () => {
                                         <button onClick={() => setEditing(false)} className="px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
                                     </>
                                 ) : (
-                                    <p className="text-sm text-gray-500">Last updated: 2025-10-01</p>
+                                    <p className="text-sm text-gray-500">Last updated: {profile?.lastUpdated}</p>
                                 )}
                             </div>
                         </div>
