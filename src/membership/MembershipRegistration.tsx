@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
@@ -6,6 +6,7 @@ import { registerMembership } from '../services/membership';
 
 const MembershipRegistration: React.FC = () => {
     const [identityCard, setIdentityCard] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -24,9 +25,23 @@ const MembershipRegistration: React.FC = () => {
                 return;
             }
             setIdentityCard(file);
+            // create preview URL for the selected file
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
             setError(null);
         }
     };
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    // cleanup object URL when identityCard changes or component unmounts
+    useEffect(() => {
+        return () => {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+    }, [previewUrl]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,48 +83,75 @@ const MembershipRegistration: React.FC = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Upload Identity Card
                             </label>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                <div className="space-y-1 text-center">
-                                    <svg
-                                        className="mx-auto h-12 w-12 text-gray-400"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        viewBox="0 0 48 48"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                            strokeWidth={2}
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                    <div className="flex text-sm text-gray-600">
-                                        <label
-                                            htmlFor="identity-card"
-                                            className="relative cursor-pointer bg-white rounded-md font-medium text-barcelonaBlue hover:text-barcelonaRed"
+                            {!identityCard && (
+                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                    <div className="space-y-1 text-center">
+                                        <svg
+                                            className="mx-auto h-12 w-12 text-gray-400"
+                                            stroke="currentColor"
+                                            fill="none"
+                                            viewBox="0 0 48 48"
+                                            aria-hidden="true"
                                         >
-                                            <span>Upload a file</span>
-                                            <input
-                                                id="identity-card"
-                                                name="identity-card"
-                                                type="file"
-                                                className="sr-only"
-                                                accept="image/*"
-                                                onChange={handleFileChange}
+                                            <path
+                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                             />
-                                        </label>
-                                        <p className="pl-1">or drag and drop</p>
+                                        </svg>
+                                        <div className="flex text-sm text-gray-600">
+                                            <label
+                                                htmlFor="identity-card"
+                                                className="relative cursor-pointer bg-white rounded-md font-medium text-barcelonaBlue hover:text-barcelonaRed"
+                                            >
+                                                <span>Upload a file</span>
+                                                <input
+                                                    id="identity-card"
+                                                    name="identity-card"
+                                                    type="file"
+                                                    ref={el => { inputRef.current = el; }}
+                                                    className="sr-only"
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                />
+                                            </label>
+                                            <p className="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p className="text-xs text-gray-500">
+                                            PNG, JPG, GIF up to 2MB
+                                        </p>
                                     </div>
-                                    <p className="text-xs text-gray-500">
-                                        PNG, JPG, GIF up to 2MB
-                                    </p>
                                 </div>
-                            </div>
+                            )}
                             {identityCard && (
-                                <p className="mt-2 text-sm text-gray-500">
-                                    Selected file: {identityCard.name}
-                                </p>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">Selected file: {identityCard.name}</p>
+                                    {previewUrl && (
+                                        <div className="mt-3">
+                                            <div className="flex justify-center">
+                                                <img src={previewUrl} alt="preview" className="h-56 w-56 md:h-64 md:w-64 object-contain rounded-md border" />
+                                            </div>
+                                            <p className="text-sm text-gray-600 text-center mt-2">Preview</p>
+                                            <div className="flex justify-center mt-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        // revoke and clear
+                                                        if (previewUrl) URL.revokeObjectURL(previewUrl);
+                                                        setPreviewUrl(null);
+                                                        setIdentityCard(null);
+                                                        // reset native file input
+                                                        if (inputRef.current) inputRef.current.value = '';
+                                                    }}
+                                                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50"
+                                                >
+                                                    Remove file
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             )}
                         </div>
 
