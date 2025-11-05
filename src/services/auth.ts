@@ -40,7 +40,14 @@ export const loginWithCardService = async (formdata: FormData) => {
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(response);
+    console.log(response.data.data.accessToken);
+    console.log(response.data.data.user);
+    console.log(response.data.data.refreshToken); 
+    
     if (response.data.data.accessToken && response.data.data.user && response.data.data.refreshToken) {
+      console.log("sudah di save");
+      
       localStorage.setItem('accessToken', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(response.data.data.user));

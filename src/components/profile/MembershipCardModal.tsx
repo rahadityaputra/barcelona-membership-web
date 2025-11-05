@@ -9,6 +9,7 @@ interface MembershipCardModalProps {
     membershipId?: string;
     joinedDate?: string;
     membershipCardImageUrl?: string;
+    email?: string;
   };
 }
 
@@ -17,10 +18,11 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
 
   const downloadCard = async () => {
     // const token = localStorage.getItem("accessToken");
+    
 
     const res = await api.get("http://localhost:3000/api/user/membership-card/download", {
-      responseType : 'blob',
-      
+      responseType: 'blob',
+
     });
 
     const blob = res.data;
@@ -50,8 +52,7 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
           <h2 className="text-xl font-bold text-barcelonaBlue mb-4">Membership Card</h2>
 
           <img
-            // src={profile.membershipCardImageUrl || "https://via.placeholder.com/120"}
-            src="https://yeqndlqawxotbtwpwqtr.supabase.co/storage/v1/object/public/membership_cards/17/membership-card.png"
+            src={profile.membershipCardImageUrl}
             className="border-barcelonaGold"
             alt="Profile"
           />
@@ -60,8 +61,8 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
           </button>
 
           <p className="text-lg font-semibold mt-4 text-gray-700">{profile.fullname}</p>
-          {/* <p className="text-sm text-gray-500 mt-1">ID: {profile.fullna || "N/A"}</p>
-          <p className="text-sm text-gray-500">Member Since: {profile.joinedDate || "N/A"}</p> */}
+          <p className="text-sm text-gray-500 mt-1">ID: {profile.membershipId || "N/A"}</p>
+          <p className="text-sm text-gray-500">Email: {profile.email || "N/A"}</p>
 
           {/* Card Design Accent */}
           <div className="mt-5 bg-barcelonaBlue text-white p-3 rounded-lg font-bold tracking-wide">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import NewsCard from '../news/NewsCard';
@@ -8,6 +8,8 @@ import atas from '../assets/atas.webp';
 import yamal from '../assets/yamal.webp';
 import profile from '../assets/profile.webp';
 import meet from '../assets/meet.webp';
+import useProfile from '../hooks/useProfile';
+import MembershipCardModal from '../components/profile/MembershipCardModal';
 const sampleNews = [
     { title: 'Squad', description: 'Meet the squad of our army', image: squad },
     { title: 'Exclusive Interview', description: 'An interview with the starboy.', image: yamal },
@@ -15,6 +17,17 @@ const sampleNews = [
 ];
 
 const Dashboard: React.FC = () => {
+    const { profile, fetchProfile } = useProfile();
+    const [showMembershipModal, setShowMembershipModal] = useState(false);
+
+    React.useEffect(() => {
+        fetchProfile();
+    }, [fetchProfile]);
+
+    const handleViewMembershipCard = () => {
+        setShowMembershipModal(true);
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <Header />
@@ -34,7 +47,7 @@ const Dashboard: React.FC = () => {
                                 <p className="mt-2 text-gray-700">This is your fan hub, latest news, membership perks, and upcoming events all in one place.</p>
                                 <div className="mt-4 flex space-x-3">
                                     <a href="/exclusive-news" className="px-4 py-2 bg-barcelonaRed text-white rounded-md shadow">Exclusive News</a>
-                                    <a href="/membership-card" className="px-4 py-2 bg-barcelonaBlue text-white rounded-md shadow">View Membership Card</a>
+                                    <button onClick={handleViewMembershipCard} className="px-4 py-2 bg-barcelonaBlue text-white rounded-md shadow">View Membership Card</button>
                                 </div>
                             </div>
                         </div>
@@ -101,6 +114,13 @@ const Dashboard: React.FC = () => {
             </main>
 
             <Footer />
+
+            {/* Membership Card Modal */}
+            <MembershipCardModal
+                isOpen={showMembershipModal}
+                onClose={() => setShowMembershipModal(false)}
+                profile={profile || {}}
+            />
         </div>
     );
 };

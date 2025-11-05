@@ -40,7 +40,7 @@ const useAuth = () => {
       if (result.success) {
         setIsAuthenticated(true);
         setUser(result.data.user);
-        navigate('/dashboard');
+        navigate('/');
         return { success: true };
       }
       return { success: false, message: result.message };
@@ -65,7 +65,7 @@ const useAuth = () => {
       if (result.success) {
         setIsAuthenticated(true);
         setUser(result.data.user);
-        navigate('/dashboard');
+        // navigate('/');
         return { success: true };
       }
       return { success: false, message: result.message };

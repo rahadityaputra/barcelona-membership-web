@@ -23,6 +23,8 @@ const useProfile = () => {
         try {
             setLoading(true);
             const result = await getProfileService();
+            console.log(result);
+            
             if (result.success) {
                 setProfile(result.data);
             } else {

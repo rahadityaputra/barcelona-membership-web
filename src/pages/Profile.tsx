@@ -4,10 +4,12 @@ import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import useProfile from '../hooks/useProfile';
 import avatarPlaceholder from '../assets/profile.webp';
+import MembershipCardModal from '../components/profile/MembershipCardModal';
 
 const Profile: React.FC = () => {
     const { profile, fetchProfile, updateProfile } = useProfile();
     const [editing, setEditing] = useState(false);
+    const [showMembershipModal, setShowMembershipModal] = useState(false);
     const [form, setForm] = useState({
         fullname: '',
         email: '',
@@ -15,6 +17,10 @@ const Profile: React.FC = () => {
         gender: '',
         dateOfBirth: '',
     });
+
+    useEffect(() => {
+
+    }, [profile])
 
     useEffect(() => {
         fetchProfile();
@@ -52,7 +58,7 @@ const Profile: React.FC = () => {
 
     const handleMembershipClick = () => {
         if (isMember) {
-            navigate('/membership-card');
+            setShowMembershipModal(true);
         } else {
             navigate('/membership-registration');
         }
@@ -85,6 +91,13 @@ const Profile: React.FC = () => {
                                     {isMember ? 'View Membership Card' : 'Apply for Membership'}
                                 </button>
                             </div>
+
+                            {/* Membership Card Modal */}
+                            <MembershipCardModal
+                                isOpen={showMembershipModal}
+                                onClose={() => setShowMembershipModal(false)}
+                                profile={profile || {}}
+                            />
                         </div>
 
                         <div className="md:w-2/3 p-6">
