@@ -3,12 +3,15 @@ import NewsList from './NewsList';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import useExclusiveNews from '../hooks/useExclusiveNews';
+import away from '../assets/away.webp';
+import youngster from '../assets/youngster.webp';
+// import squad from '../assets/squad.webp';
+
 
 const NewsExclusive: React.FC = () => {
     const exclusiveNews = [
-        { id: 1, title: 'Exclusive News 1', description: 'This is the first exclusive news for premium members.', image: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Exclusive+1' },
-        { id: 2, title: 'Exclusive News 2', description: 'This is the second exclusive news for premium members.', image: 'https://via.placeholder.com/300/0000FF/FFFFFF?text=Exclusive+2' },
-        { id: 3, title: 'Exclusive News 3', description: 'This is the third exclusive news for premium members.', image: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Exclusive+3' },
+    { id: 4, title: 'Life experience', description: 'Two young men from the Barça Academy Residency Arizona train in Barcelona.', image: youngster, link: '/news/life-experience' },
+    { id: 5, title: 'Squad for the trip to Bruges', description: 'Hansi Flick names his players for the Champions League clash in Belgium against Club Brugge.', image: away, link: '/news/squad-bruges' },
     ];
 
     const {fetchExclusiveNews, news, loading, error} = useExclusiveNews();

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router';
+import squad from '../assets/squad.webp';
+
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('rahadit.a.p123@gmail.com');
@@ -31,8 +33,16 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-barcelonaBlue">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div
+            className="relative flex items-center justify-center min-h-screen"
+            style={{
+                backgroundImage: `url(${squad})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
+        >
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.35)' }} />
+            <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h1 className="text-2xl font-bold text-center text-barcelonaBlue mb-6">Login</h1>
                 <form className="space-y-4">
                     <div>

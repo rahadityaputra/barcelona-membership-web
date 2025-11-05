@@ -1,0 +1,64 @@
+{
+    "validRegistration": {
+        "email": "test@example.com",
+        "password": "Password123!",
+        "dateOfBirth": "1990-01-01",
+        "gender": "male",
+        "address": "Jl. Testing No. 123, Jakarta",
+        "facePhoto": "test-photo.jpg"
+    },
+    "invalidEmail": {
+        "email": "invalid-email",
+        "password": "Password123!",
+        "dateOfBirth": "1990-01-01",
+        "gender": "male",
+        "address": "Jl. Testing No. 123, Jakarta",
+        "facePhoto": "test-photo.jpg"
+    },
+    "weakPassword": {
+        "email": "test2@example.com",
+        "password": "123456",
+        "dateOfBirth": "1990-01-01",
+        "gender": "female",
+        "address": "Jl. Testing No. 123, Jakarta",
+        "facePhoto": "test-photo.jpg"
+    },
+    "missingRequiredFields": {
+        "email": "test3@example.com",
+        "password": "Password123!",
+        "gender": "male",
+        "address": "Jl. Testing No. 123, Jakarta"
+    },
+    "invalidDateFormat": {
+        "email": "test4@example.com",
+        "password": "Password123!",
+        "dateOfBirth": "01-01-1990",
+        "gender": "female",
+        "address": "Jl. Testing No. 123, Jakarta",
+        "facePhoto": "test-photo.jpg"
+    },
+    "invalidGender": {
+        "email": "test5@example.com",
+        "password": "Password123!",
+        "dateOfBirth": "1990-01-01",
+        "gender": "invalid",
+        "address": "Jl. Testing No. 123, Jakarta",
+        "facePhoto": "test-photo.jpg"
+    },
+    "emptyAddress": {
+        "email": "test6@example.com",
+        "password": "Password123!",
+        "dateOfBirth": "1990-01-01",
+        "gender": "male",
+        "address": "",
+        "facePhoto": "test-photo.jpg"
+    },
+    "invalidPhotoFormat": {
+        "email": "test7@example.com",
+        "password": "Password123!",
+        "dateOfBirth": "1990-01-01",
+        "gender": "female",
+        "address": "Jl. Testing No. 123, Jakarta",
+        "facePhoto": "test-document.pdf"
+    }
+}
