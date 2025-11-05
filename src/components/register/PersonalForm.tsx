@@ -55,9 +55,8 @@ const PersonalForm: React.FC<PersonalFormProps> = ({
                     required
                 >
                     <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
                 </select>
             </div>
             <div>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NewsList from './NewsList';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
+import useExclusiveNews from '../hooks/useExclusiveNews';
 
 const NewsExclusive: React.FC = () => {
     const exclusiveNews = [
@@ -9,6 +10,25 @@ const NewsExclusive: React.FC = () => {
         { id: 2, title: 'Exclusive News 2', description: 'This is the second exclusive news for premium members.', image: 'https://via.placeholder.com/300/0000FF/FFFFFF?text=Exclusive+2' },
         { id: 3, title: 'Exclusive News 3', description: 'This is the third exclusive news for premium members.', image: 'https://via.placeholder.com/300/FF0000/FFFFFF?text=Exclusive+3' },
     ];
+
+    const {fetchExclusiveNews, news, loading, error} = useExclusiveNews();
+
+
+    useEffect(() => {
+        fetchExclusiveNews();
+    }, [fetchExclusiveNews]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-100 flex flex-col">
+                <Header />
+                <main className="container mx-auto p-4 flex-grow">
+                    <p>Loading exclusive news...</p>
+                </main>
+                <Footer />
+            </div>
+        );  
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col">

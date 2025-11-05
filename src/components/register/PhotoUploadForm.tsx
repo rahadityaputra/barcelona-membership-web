@@ -17,7 +17,7 @@ const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ identityCard, setIden
     return (
         <div className="space-y-4">
             <div>
-                <label htmlFor="face-photo" className="block text-sm font-medium text-gray-700">Face Photo</label>
+                <label htmlFor="face-photo" className="block text-sm font-medium text-gray-700">Identity Card</label>
                 <input
                     type="file"
                     id="face-photo"

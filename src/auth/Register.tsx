@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import AccountForm from '../components/register/AccountForm';
 import PersonalForm from '../components/register/PersonalForm';
-import PhotoUploadForm from '../components/register/PhotoUploadForm';
+import { useNavigate } from 'react-router';
 
 const Register: React.FC = () => {
     const [step, setStep] = useState(1);
-    const [email, setEmail] = useState('');
-    const [fullname, setFullname] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState('rahadit.a.p123@gmail.com');
+    const [fullname, setFullname] = useState('rahaditya abimanyu putra');
+    const [password, setPassword] = useState('12345678');
+    const [confirmPassword, setConfirmPassword] = useState('12345678');
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [gender, setGender] = useState('');
-    const [address, setAddress] = useState('');
-    const [identityCard, setIdentityCard] = useState<File | null>(null);
+    const [address, setAddress] = useState('sendang');
     const [error, setError] = useState<string | null>(null);
+    
 
     const { register } = useAuth();
-    // const navigate = useNavigate();
-
+    const navigate = useNavigate();
     const nextStep = () => {
         setError(null);
         if (step === 1) {
@@ -49,11 +47,6 @@ const Register: React.FC = () => {
         e.preventDefault();
         setError(null);
 
-        if (!identityCard) {
-            setError('Please upload your face photo.');
-            return;
-        }
-
         if (password !== confirmPassword) {
             setError('Passwords do not match.');
             return;
@@ -67,12 +60,13 @@ const Register: React.FC = () => {
                 dateOfBirth,
                 gender,
                 address,
-                identityCard,
+                // identityCard,
             };
 
             const result = await register(registrationData);
             if (result.success) {
-                // Redirection handled by useAuth hook
+                navigate('/');
+                console.log(result)
             } else {
                 setError(result.message || 'Registration failed.');
             }
@@ -108,13 +102,6 @@ const Register: React.FC = () => {
                         setAddress={setAddress}
                     />
                 );
-            case 3:
-                return (
-                    <PhotoUploadForm
-                        identityCard={identityCard}
-                        setIdentityCard={setIdentityCard}
-                    />
-                );
             default:
                 return null;
         }
@@ -145,7 +132,7 @@ const Register: React.FC = () => {
                                 Previous
                             </button>
                         )}
-                        {step < 3 && (
+                        {step < 2 && (
                             <button
                                 type="button"
                                 onClick={nextStep}
@@ -154,7 +141,7 @@ const Register: React.FC = () => {
                                 Next
                             </button>
                         )}
-                        {step === 3 && (
+                        {step === 2 && (
                             <button
                                 type="submit"
                                 className="w-full py-2 px-4 bg-barcelonaRed text-white font-semibold rounded-md hover:bg-barcelonaDarkRed"
