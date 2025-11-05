@@ -2,15 +2,13 @@ import React from 'react';
 import NewsList from './NewsList';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
-import hasil from '../assets/hasil.webp';
-import yamal from '../assets/yamal.webp';
-import meet from '../assets/meet.webp';
-
+import away from '../assets/away.webp';
+import youngster from '../assets/youngster.webp';
+import squad from '../assets/squad.webp';
 const NewsExclusive: React.FC = () => {
     const exclusiveNews = [
-        { id: 1, title: 'Matchday Highlights', description: 'Relive the best moments from last night.', image: hasil },
-        { id: 2, title: 'Exclusive Interview', description: 'An interview with the captain.', image: yamal },
-        { id: 3, title: 'Members Meet-up', description: 'Join the next fan meetup in your city.', image: meet },
+    { id: 4, title: 'Life experience', description: 'Two young men from the Barça Academy Residency Arizona train in Barcelona.', image: youngster, link: '/news/life-experience' },
+    { id: 5, title: 'Squad for the trip to Bruges', description: 'Hansi Flick names his players for the Champions League clash in Belgium against Club Brugge.', image: away, link: '/news/squad-bruges' },
     ];
 
     return (

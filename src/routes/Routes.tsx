@@ -12,6 +12,11 @@ import MembersMeetup from '../news/MembersMeetup';
 import Squad from '../pages/Squad';
 import Home from '../pages/Home';
 import ProtectedRoute from '../ProtectedRoute';
+import AraujoArticle from '../news/AraujoArticle';
+import RashfordArticle from '../news/RashfordArticle';
+import MatchElcheArticle from '../news/MatchElcheArticle';
+import LifeExperienceArticle from '../news/LifeExperienceArticle';
+import SquadBrugesArticle from '../news/SquadBrugesArticle';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -29,6 +34,11 @@ const AppRoutes: React.FC = () => {
                     <Route path="/exclusive-interview" element={<ExclusiveInterview />} />
                     <Route path="/members-meetup" element={<MembersMeetup />} />
                     <Route path="/squad" element={<Squad />} />
+                    <Route path="/news/araujo" element={<AraujoArticle />} />
+                    <Route path="/news/rashford" element={<RashfordArticle />} />
+                    <Route path="/news/match-elche" element={<MatchElcheArticle />} />
+                    <Route path="/news/life-experience" element={<LifeExperienceArticle />} />
+                    <Route path="/news/squad-bruges" element={<SquadBrugesArticle />} />
                     <Route path="/regular-news" element={<NewsRegular />} />
                 </Route>
             </Routes>
