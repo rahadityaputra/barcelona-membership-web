@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 import { getProfileService, updateProfileService } from "../services/user";
 import api from "../services/api";
+import { useLoading } from "../contexts/LoadingContext";
 
 const useProfile = () => {
-    // Profile related logic here
     interface UserProfile {
         email: string;
         fullname: string;
@@ -19,12 +19,12 @@ const useProfile = () => {
     }
 
     const [profile, setProfile] = useState<UserProfile | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const { loading, startLoading, stopLoading } = useLoading();
 
     const fetchProfile = useCallback(async () => {
         try {
-            setLoading(true);
+            startLoading();
             const result = await getProfileService();
             console.log(result);
             
@@ -34,17 +34,19 @@ const useProfile = () => {
                 setError(result.message);
             }
         } catch (error) {
-            setLoading(false);
+            stopLoading();
             setError('Failed to fetch profile');
             console.error('Failed to fetch profile:', error);
         } finally{
-            setLoading(false);
+            console.log("ppp");
+            
+            stopLoading();
         }
     }, []);
 
     const updateProfile = async (formData: FormData) => {
         try {
-            setLoading(true);
+            startLoading();
             const result = await updateProfileService(formData);
             if (result.success) {
                 setProfile(result.data);
@@ -55,7 +57,7 @@ const useProfile = () => {
             setError('Failed to update profile');
             console.error('Failed to update profile:', error);
         } finally {
-            setLoading(false);
+            stopLoading();
         }
     }
 
@@ -64,13 +66,10 @@ const useProfile = () => {
             const result = await api.get("/api/user/identity-card/download", {
                 responseType: 'blob'
             });
-            // Buat URL object dari blob
             const url = window.URL.createObjectURL(new Blob([result.data]));
-            
-            // Buat link untuk trigger download
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'identity-card.png'); // nama file
+            link.setAttribute('download', 'identity-card.png');
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -78,7 +77,7 @@ const useProfile = () => {
             setError('Failed to download idenity card');
             console.error('Failed to downlaod identity card:', error);
         } finally {
-            setLoading(false);
+            stopLoading();
         }
     }
     return {

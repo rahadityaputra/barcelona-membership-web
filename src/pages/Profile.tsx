@@ -5,17 +5,21 @@ import Footer from '../layout/Footer';
 import useProfile from '../hooks/useProfile';
 import avatarPlaceholder from '../assets/profile.webp';
 import MembershipCardModal from '../components/profile/MembershipCardModal';
+import AvatarEditModal from '../components/profile/AvatarEditModal';
 
 const Profile: React.FC = () => {
     const { profile, fetchProfile, updateProfile, downloadIdentityCard } = useProfile();
     const [editing, setEditing] = useState(false);
     const [showMembershipModal, setShowMembershipModal] = useState(false);
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const [avatarPreview, setAvatarPreview] = useState<string>(avatarPlaceholder);
     const [form, setForm] = useState({
         fullname: '',
         email: '',
         address: '',
         gender: '',
-        dateOfBirth: '',
+        birthDate: '',
     });
 
     useEffect(() => {
@@ -33,8 +37,9 @@ const Profile: React.FC = () => {
                 email: profile.email || '',
                 address: profile.address || '',
                 gender: profile.gender || '',
-                dateOfBirth: profile.birthDate || '',
+                birthDate: profile.birthDate || '',
             });
+            setAvatarPreview(profile.avatar || avatarPlaceholder);
         }
     }, [profile]);
 
@@ -48,8 +53,21 @@ const Profile: React.FC = () => {
         Object.keys(form).forEach((key) => {
             formData.append(key, (form as any)[key]);
         });
+        if (avatarFile) {
+            formData.append('avatar', avatarFile);
+        }
         await updateProfile(formData);
         setEditing(false);
+        setAvatarFile(null); 
+    };
+
+    const handleAvatarSave = (file: File) => {
+        setAvatarFile(file);
+        const reader = new FileReader();
+        reader.onload = () => {
+            setAvatarPreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
     };
 
     const navigate = useNavigate();
@@ -66,7 +84,7 @@ const Profile: React.FC = () => {
 
     const handleIdentityCardClick = () => {
         downloadIdentityCard();
-        
+
     }
 
     return (
@@ -76,9 +94,16 @@ const Profile: React.FC = () => {
                 <div className="w-full max-w-4xl">
                     <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
                         <div className="md:w-1/3 bg-gradient-to-b from-white to-gray-100 p-6 flex flex-col items-center">
-                            <img src={profile?.avatar || avatarPlaceholder} alt="Avatar" className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-barcelonaGold object-cover" />
+                            <img src={avatarPreview} alt="Avatar" className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-barcelonaGold object-cover" />
+                            {editing && (
+                                <button
+                                    onClick={() => setShowAvatarModal(true)}
+                                    className="mt-2 text-sm text-barcelonaBlue hover:underline"
+                                >
+                                    Edit Avatar
+                                </button>
+                            )}
                             <h3 className="mt-4 text-lg font-bold text-gray-800">{form.fullname}</h3>
-                            <p className="text-sm text-gray-500">Member ID: <span className="font-mono">{profile?.membershipId || 'N/A'}</span></p>
                             <p className="mt-2 text-sm text-green-600 font-semibold">{isMember ? 'Member' : 'Non-Member'}</p>
                             <div className="mt-4 w-full">
                                 <button
@@ -97,7 +122,7 @@ const Profile: React.FC = () => {
                                 </button>
                             </div>
 
-                          {profile?.isMemberUser && (<div className="mt-3 w-full">
+                            {profile?.isMemberUser && (<div className="mt-3 w-full">
                                 <button
                                     onClick={handleIdentityCardClick}
                                     className="w-full py-2 px-4 border border-barcelonaBlue text-barcelonaBlue rounded-md shadow-sm hover:bg-barcelonaBlue/5"
@@ -113,13 +138,13 @@ const Profile: React.FC = () => {
                                 profile={profile || {}}
                             />
 
-
-                             {/* Membership Card Modal
-                             <IdentityCardModal
-                                isOpen={showIdentityCardModal}
-                                onClose={() => setShowIdentityCardModal(false)}
-                                profile={profile || {}}
-                            /> */}
+                            {/* Avatar Edit Modal */}
+                            <AvatarEditModal
+                                isOpen={showAvatarModal}
+                                onClose={() => setShowAvatarModal(false)}
+                                currentAvatar={avatarPreview}
+                                onSave={handleAvatarSave}
+                            />
                         </div>
 
                         <div className="md:w-2/3 p-6">
@@ -149,8 +174,8 @@ const Profile: React.FC = () => {
                                     {editing ? (
                                         <select name="gender" value={form.gender} onChange={handleChange} className="mt-1 w-full px-3 py-2 border rounded-md">
                                             <option value="">Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
                                         </select>
                                     ) : (
                                         <p className="mt-1 text-gray-700">{form.gender}</p>
@@ -160,9 +185,9 @@ const Profile: React.FC = () => {
                                 <div>
                                     <label className="block text-sm text-gray-600">Date of Birth</label>
                                     {editing ? (
-                                        <input name="dateOfBirth" type="date" value={form.dateOfBirth} onChange={handleChange} className="mt-1 w-full px-3 py-2 border rounded-md" />
+                                        <input name="dateOfBirth" type="date" value={form.birthDate} onChange={handleChange} className="mt-1 w-full px-3 py-2 border rounded-md" />
                                     ) : (
-                                        <p className="mt-1 text-gray-700">{form.dateOfBirth}</p>
+                                        <p className="mt-1 text-gray-700">{form.birthDate}</p>
                                     )}
                                 </div>
 

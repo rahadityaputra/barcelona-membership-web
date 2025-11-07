@@ -9,7 +9,7 @@ const EditProfile = () => {
     fullname: "",
     address: "",
     gender: "",
-    dateOfBirth: "",
+    birthDate: "",
     email: "",
   });
   const [image, setImage] = useState(null);
@@ -25,7 +25,7 @@ const EditProfile = () => {
         fullname: profile.fullname || "",
         address: profile.address || "",
         gender: profile.gender || "",
-        dateOfBirth: profile.dateOfBirth || "",
+        birthDate: profile.birthDate || "",
         email: profile.email || "",
       });
       setPreview(profile.profileImageUrl || null);
@@ -46,11 +46,17 @@ const EditProfile = () => {
     e.preventDefault();
     const formData = new FormData();
     Object.keys(form).forEach((key) => {
+      console.log(key, " = ", form[key]);
+      
       formData.append(key, form[key]);
     });
-    if (image) formData.append("image", image);
 
-    await updateProfile(formData);
+    if (image) formData.append("avatarImage", image);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    // await updateProfile(formData);
+
   };
 
   return (
@@ -112,7 +118,7 @@ const EditProfile = () => {
           <input
             type="date"
             name="dateOfBirth"
-            value={form.dateOfBirth}
+            value={form.birthDate}
             onChange={handleChange}
             className="w-full border rounded p-2"
           />

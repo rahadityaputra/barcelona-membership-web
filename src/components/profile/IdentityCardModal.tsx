@@ -15,7 +15,7 @@ const IdentityCardModal: React.FC<IdentitCardModalType> = ({ isOpen, onClose, pr
   if (!isOpen) return null;
 
   const downloadCard = async () => {
-    const res = await api.get("http://localhost:3000/api/user/identity-card/download", {
+    const res = await api.get("https://localhost:3000/api/user/identity-card/download", {
       responseType: 'blob',
 
     });

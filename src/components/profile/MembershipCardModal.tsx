@@ -15,7 +15,7 @@ const MembershipCardModal: React.FC<MembershipCardModalProps> = ({ isOpen, onClo
   if (!isOpen) return null;
 
   const downloadCard = async () => {
-    const res = await api.get("http://localhost:3000/api/user/membership-card/download", {
+    const res = await api.get("https://localhost:3000/api/user/membership-card/download", {
       responseType: 'blob',
 
     });

@@ -55,17 +55,10 @@ const useAuth = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append('membershipCard', membershipCard);
-
-      // const result = await api.post('api/auth/login-with-card', formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // });
       const result = await loginWithCardService(formData);
       if (result.success) {
         setIsAuthenticated(true);
         setUser(result.data.user);
-        // navigate('/');
         return { success: true };
       }
       return { success: false, message: result.message };
@@ -80,10 +73,11 @@ const useAuth = () => {
   const register = async (data: RegisterData) => {
     try {
       const result = await registerService(data);
+      console.log(result);
+      
       if (result.success) {
         setIsAuthenticated(true);
         setUser(result.data.user);
-        navigate('/dashboard');
         return { success: true };
       }
       return { success: false, message: result.message };
