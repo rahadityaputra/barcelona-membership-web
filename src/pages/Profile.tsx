@@ -8,12 +8,13 @@ import MembershipCardModal from '../components/profile/MembershipCardModal';
 import AvatarEditModal from '../components/profile/AvatarEditModal';
 
 const Profile: React.FC = () => {
-    const { profile, fetchProfile, updateProfile, downloadIdentityCard } = useProfile();
+    const { profile, fetchProfile, updateProfile, downloadIdentityCard, downloadMembershipCard} = useProfile();
     const [editing, setEditing] = useState(false);
     const [showMembershipModal, setShowMembershipModal] = useState(false);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [avatarPreview, setAvatarPreview] = useState<string>(avatarPlaceholder);
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         fullname: '',
         email: '',
@@ -23,15 +24,12 @@ const Profile: React.FC = () => {
     });
 
     useEffect(() => {
-
-    }, [profile])
-
-    useEffect(() => {
         fetchProfile();
     }, [fetchProfile]);
 
     useEffect(() => {
         if (profile) {
+            console.log(profile);
             setForm({
                 fullname: profile.fullname || '',
                 email: profile.email || '',
@@ -39,7 +37,7 @@ const Profile: React.FC = () => {
                 gender: profile.gender || '',
                 birthDate: profile.birthDate || '',
             });
-            setAvatarPreview(profile.avatar || avatarPlaceholder);
+            setAvatarPreview(profile.avatarUrl || avatarPlaceholder);
         }
     }, [profile]);
 
@@ -54,11 +52,11 @@ const Profile: React.FC = () => {
             formData.append(key, (form as any)[key]);
         });
         if (avatarFile) {
-            formData.append('avatar', avatarFile);
+            formData.append('avatarImage', avatarFile);
         }
         await updateProfile(formData);
         setEditing(false);
-        setAvatarFile(null); 
+        setAvatarFile(null);
     };
 
     const handleAvatarSave = (file: File) => {
@@ -70,13 +68,12 @@ const Profile: React.FC = () => {
         reader.readAsDataURL(file);
     };
 
-    const navigate = useNavigate();
 
     const isMember = profile?.isMemberUser || false;
 
     const handleMembershipClick = () => {
         if (isMember) {
-            setShowMembershipModal(true);
+            downloadMembershipCard();
         } else {
             navigate('/membership-registration');
         }
@@ -118,7 +115,7 @@ const Profile: React.FC = () => {
                                     onClick={handleMembershipClick}
                                     className="w-full py-2 px-4 border border-barcelonaBlue text-barcelonaBlue rounded-md shadow-sm hover:bg-barcelonaBlue/5"
                                 >
-                                    {isMember ? 'View Membership Card' : 'Apply for Membership'}
+                                    {isMember ? 'Download Membership Card' : 'Apply for Membership'}
                                 </button>
                             </div>
 

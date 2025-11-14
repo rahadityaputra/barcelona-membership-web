@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import squad from '../assets/squad.webp';
 import atas from '../assets/atas.webp';
 import yamal from '../assets/yamal.webp';
-import profile from '../assets/profile.webp';
 import meet from '../assets/meet.webp';
 import useProfile from '../hooks/useProfile';
 import MembershipCardModal from '../components/profile/MembershipCardModal';
@@ -41,7 +40,6 @@ const Dashboard: React.FC = () => {
                 <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none" style={{ transform: 'translateY(calc(50% + 8px))' }}>
                     <div className="container mx-auto px-4">
                         <div className="bg-white bg-opacity-90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center pointer-events-auto">
-                            <img src={profile} alt="logo" className="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white shadow-md object-cover" />
                             <div className="ml-6 flex-1">
                                 <h1 className="text-2xl md:text-4xl font-bold text-[#03204a]">Welcome back, Blaugrana!</h1>
                                 <p className="mt-2 text-gray-700">This is your fan hub, latest news, membership perks, and upcoming events all in one place.</p>

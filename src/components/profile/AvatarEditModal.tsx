@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface AvatarEditModalProps {
     isOpen: boolean;
@@ -11,6 +11,14 @@ const AvatarEditModal: React.FC<AvatarEditModalProps> = ({ isOpen, onClose, curr
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(currentAvatar);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        // Saat 'currentAvatar' berubah (misalnya dari placeholder ke URL asli),
+        // perbarui state 'preview' di dalam modal ini.
+        if (currentAvatar) {
+            setPreview(currentAvatar);
+        }
+    }, [currentAvatar]); // 'Dengarkan' perubahan pada prop currentAv
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

@@ -4,7 +4,6 @@ import Login from '../auth/Login';
 import Register from '../auth/Register';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
-import MembershipRegistration from '../membership/MembershipRegistration';
 import NewsExclusive from '../news/NewsExclusive';
 import NewsRegular from '../news/NewsRegular';
 import EditProfile from '../pages/EditProfil';
@@ -18,6 +17,8 @@ import RashfordArticle from '../news/RashfordArticle';
 import MatchElcheArticle from '../news/MatchElcheArticle';
 import LifeExperienceArticle from '../news/LifeExperienceArticle';
 import SquadBrugesArticle from '../news/SquadBrugesArticle';
+import MembershipRegistration from '../membership/MembershipRegistration';
+
 
 const AppRoutes: React.FC = () => {
     return (
@@ -30,10 +31,12 @@ const AppRoutes: React.FC = () => {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/edit-profile" element={<EditProfile />} />
-                    <Route path="/membership-registration" element={<MembershipRegistration />} />
+
                     <Route path="/exclusive-news" element={<NewsExclusive />} />
                     <Route path="/exclusive-interview" element={<ExclusiveInterview />} />
                     <Route path="/members-meetup" element={<MembersMeetup />} />
+                    <Route path="/membership-registration" element={<MembershipRegistration />} />
+
                     <Route path="/squad" element={<Squad />} />
                     <Route path="/news/araujo" element={<AraujoArticle />} />
                     <Route path="/news/rashford" element={<RashfordArticle />} />

@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { getProfileService, updateProfileService } from "../services/user";
 import api from "../services/api";
 import { useLoading } from "../contexts/LoadingContext";
+import { useNavigate } from "react-router";
 
 const useProfile = () => {
     interface UserProfile {
@@ -14,14 +15,14 @@ const useProfile = () => {
         membershipId?: string;
         membershipCardImageUrl?: string;
         isMemberUser?: boolean;
-        avatar: string;
+        avatarUrl: string;
         lastUpdated: string;
     }
 
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [error, setError] = useState<string | null>(null);
     const { loading, startLoading, stopLoading } = useLoading();
-
+    const navigate = useNavigate();
     const fetchProfile = useCallback(async () => {
         try {
             startLoading();
@@ -49,7 +50,7 @@ const useProfile = () => {
             startLoading();
             const result = await updateProfileService(formData);
             if (result.success) {
-                setProfile(result.data);
+                navigate('/profile');
             } else {
                 setError(result.message);
             }
@@ -60,6 +61,20 @@ const useProfile = () => {
             stopLoading();
         }
     }
+    const downloadMembershipCard = async () => {
+        const res = await api.get("https://localhost:3000/api/user/membership-card/download", {
+          responseType: 'blob',
+    
+        });
+    
+        const blob = res.data;
+        const url = URL.createObjectURL(blob);
+    
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "membership-card.png";
+        a.click();
+      };
 
     const downloadIdentityCard = async () => {
         try {
@@ -86,7 +101,8 @@ const useProfile = () => {
         error,
         fetchProfile,
         updateProfile,
-        downloadIdentityCard
+        downloadIdentityCard,
+        downloadMembershipCard
     };
 }
 

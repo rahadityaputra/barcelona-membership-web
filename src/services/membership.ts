@@ -22,7 +22,7 @@ export const registerMembership = async (identityCard: File) => {
 
 export const getMembershipStatus = async () => {
   try {
-    const response = await api.get('/membership/status');
+    const response = await api.get('/membership/status/');
     return { success: true, data: response.data };
   } catch (error: any) {
     return {

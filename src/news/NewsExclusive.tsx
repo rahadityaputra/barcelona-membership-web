@@ -1,25 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NewsList from './NewsList';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import useExclusiveNews from '../hooks/useExclusiveNews';
+import useMember from '../hooks/useMember';
+import NonMemberModal from '../components/NonMemberModal';
 import away from '../assets/away.webp';
 import youngster from '../assets/youngster.webp';
-// import squad from '../assets/squad.webp';
 
 
 const NewsExclusive: React.FC = () => {
+    const [showModal, setShowModal] = useState(false);
+    const { checkMember } = useMember();
+
     const exclusiveNews = [
-    { id: 4, title: 'Life experience', description: 'Two young men from the Barça Academy Residency Arizona train in Barcelona.', image: youngster, link: '/news/life-experience' },
-    { id: 5, title: 'Squad for the trip to Bruges', description: 'Hansi Flick names his players for the Champions League clash in Belgium against Club Brugge.', image: away, link: '/news/squad-bruges' },
+        { id: 4, title: 'Life experience', description: 'Two young men from the Barça Academy Residency Arizona train in Barcelona.', image: youngster, link: '/news/life-experience' },
+        { id: 5, title: 'Squad for the trip to Bruges', description: 'Hansi Flick names his players for the Champions League clash in Belgium against Club Brugge.', image: away, link: '/news/squad-bruges' },
     ];
 
-    const {fetchExclusiveNews, news, loading, error} = useExclusiveNews();
-
+    const { fetchExclusiveNews, loading } = useExclusiveNews();
 
     useEffect(() => {
+        const verifyMembership = async () => {
+            const result = await checkMember();
+            if (!result.success) {
+                setShowModal(true);
+            }
+        };
+        verifyMembership();
         fetchExclusiveNews();
-    }, [fetchExclusiveNews]);
+    }, [checkMember, fetchExclusiveNews]);
 
     if (loading) {
         return (
@@ -30,7 +40,7 @@ const NewsExclusive: React.FC = () => {
                 </main>
                 <Footer />
             </div>
-        );  
+        );
     }
 
     return (
@@ -41,6 +51,7 @@ const NewsExclusive: React.FC = () => {
                 <NewsList news={exclusiveNews} />
             </main>
             <Footer />
+            <NonMemberModal isOpen={showModal} onClose={() => setShowModal(false)} />
         </div>
     );
 };
